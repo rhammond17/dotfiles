@@ -1,0 +1,49 @@
+# ======================================================
+# Standard aliases
+# ======================================================
+
+# System
+alias ls='ls -G'
+#alias ll='ls -laF'
+alias ee='exa --icons --group-directories-first --git -lhga'
+alias eed='ee --only-dirs'
+alias ll='ee'
+alias lld='eed'
+alias sa='source ~/configs/zsh/.aliases'
+alias szrc='source ~/.zshrc'
+alias na='code ~/configs/zsh/.aliases'
+alias mysudo='sudo -E env "PATH=$PATH"'
+
+# Directory
+alias cdg='cd ~/git'
+alias cdrd='cd ~/ramdisk'
+alias cdgn='cdg;cd go-nats;sgp;cd src/github.com/nats-io/go-nats/examples'
+alias cdob='cdg;cd obsidian'
+
+# Utility
+alias rt='echo -ne "\033]0;${HOSTNAME%%.*}\007"'
+alias grepex='grep --exclude-dir node_modules --exclude-dir vendor --exclude-dir pkg'
+alias sgp='export GOPATH=`pwd`;echo GOPATH=$GOPATH'
+alias glr='golangci-lint run'
+alias nv="non_vendor"
+
+# Kubernetes
+alias k='kubectl'
+alias kcm='kapitan compile -t minikube'
+alias kam='k apply -Rf ./compiled/minikube'
+alias kex='k exec -it'
+alias kctx='kubectx'
+
+# Minikube
+alias mk='minikube'
+alias mkstart='mk start --kubernetes-version=v1.21.14 --driver=docker --cpus=6 --memory="24000mb"'
+alias mkstop='mk stop'
+alias mkstat='mk status'
+alias mkrm='mk delete'
+alias mkdocker='eval $(minikube -p minikube docker-env)'
+
+{{ if eq .chezmoi.os "darwin" -}}
+# OSX
+alias flushdns='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper'
+alias mkramdisk="diskutil erasevolume HFS+ 'RAM Disk' `hdiutil attach -nomount ram://4194304`"
+{{ end }}

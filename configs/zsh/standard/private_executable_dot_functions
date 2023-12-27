@@ -1,0 +1,17 @@
+non_vendor() {
+	find . -type f -name '*.go' -not -path "./vendor/*"
+}
+
+function set_tab_title() {
+    echo -n -e "\033]0;$(basename `pwd`)\007"
+}
+
+# Colormap
+function colormap() {
+  for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done
+}
+
+
+# Append precmd function hook array
+# https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md
+precmd_functions+=(set_tab_title)

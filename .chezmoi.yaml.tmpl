@@ -1,0 +1,7 @@
+{{ $email := promptString "email" "register@randallhammond.com" -}}
+
+
+data:
+    email: {{ $email | quote }}
+
+

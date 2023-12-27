@@ -1,0 +1,16 @@
+{{ if eq .chezmoi.os "darwin" -}}
+# Dir colors (https://www.cyberciti.biz/faq/apple-mac-osx-terminal-color-ls-output-option/)
+#export LSCOLORS="exfxcxdxbxegedabagacad" #default
+export LSCOLORS="Exfxcxdxbxegedabagacad"
+{{ end }}
+
+# Prevent homebrew from running cleanup on upgraded formulae (keep the old version)
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+# Don't auto update homebrew formula
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+export DIRENV_LOG_FORMAT=
+
+# Kubernetes config
+export KUBECONFIG=$HOME/.kube/config

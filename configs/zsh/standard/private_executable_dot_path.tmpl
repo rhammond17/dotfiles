@@ -1,0 +1,13 @@
+# Homebrew path
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
+# Go
+export PATH=~/go-tools/bin:$HOME/go/bin:$PATH
+
+# Yarn
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Visual Studio Code
+{{ if eq .chezmoi.os "darwin" -}}
+export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
+{{ end }}
