@@ -16,6 +16,7 @@
     - name: Install packages
       ansible.builtin.apt:
         name:
+          - locales
           - git
           - vim
           - zsh
@@ -27,4 +28,8 @@
       ansible.builtin.user:
         name: "{{ remote_regular_user }}"
         shell: /usr/bin/zsh
+
+    - name: Generate Locales
+      ansible.builtin.shell:
+        cmd: locale-gen en_US.UTF-8
 
