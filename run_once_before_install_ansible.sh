@@ -6,6 +6,12 @@ install_on_fedora() {
 
 install_on_ubuntu() {
     sudo apt-get update
+    
+    # Install and configure tzdata so ansible doesn't prompt for the info
+    ln -fs /usr/share/zoneinfo/US/Pacific /etc/localtime
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
+    dpkg-reconfigure --frontend noninteractive tzdata
+
     sudo apt-get install -y ansible
 }
 
