@@ -40,5 +40,5 @@
         name:
           - exa
           - fzf
+          - autoenv
         state: present
-        
