@@ -20,8 +20,6 @@
           - git
           - vim
           - zsh
-          - fzf
-          - exa
         state: present
 
     - name: Change shell to zsh
@@ -33,3 +31,14 @@
       ansible.builtin.shell:
         cmd: locale-gen en_US.UTF-8
 
+    - name: Update Homebrew
+      community.general.homebrew:
+        update_homebrew: true
+
+    - name: Install Brew Packages
+      community.general.homebrew:
+        name:
+          - exa
+          - fzf
+        state: present
+        
