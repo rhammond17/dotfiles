@@ -41,4 +41,6 @@
           - exa
           - fzf
           - autoenv
+          - pyenv
+          - plenv
         state: present
