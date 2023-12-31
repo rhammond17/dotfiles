@@ -9,6 +9,11 @@
     pulumi_version: "v3.94.2"
 
   tasks:
+    - name: Get Distribution
+      shell: uname
+      ignore_errors: yes
+      register: distro
+
     - name: Get my user
       ansible.builtin.set_fact:
         remote_regular_user: "{{ ansible_env.SUDO_USER if ansible_env.SUDO_USER is defined else ansible_user_id }}"
@@ -44,3 +49,18 @@
           - pyenv
           - plenv
         state: present
+
+    - name: Installing Inconsolata Font
+      ansibe.builtin.get_url:
+        url: {{ item }}
+        dest: "/usr/share/fonts/InconsolataGo"
+        mode: "0644"
+      loop:
+        - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Regular/InconsolataGoNerdFont-Regular.ttf
+        - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Regular/InconsolataGoNerdFontMono-Regular.ttf
+        - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Regular/InconsolataGoNerdFontPropo-Regular.ttf
+        - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Bold/InconsolataGoNerdFont-Bold.ttf
+        - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Bold/InconsolataGoNerdFontMono-Bold.ttf
+        - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Bold/InconsolataGoNerdFontPropo-Bold.ttf
+      when: distro == "Linux"
+      
