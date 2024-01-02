@@ -53,14 +53,23 @@
     - name: Font base install path
       set_fact:
           font_base_path: "{% if uname.stdout == 'Darwin' %}~/Library/Fonts{% else %}/usr/share/fonts{% endif %}" 
-     
+
+    - name: Check if InconsolataGo already exists
+      ansible.builtin.shell: "ls {{ font_base_path }}/InconsolataGo/InconsolataGoNerdFont*"
+      register: inconsolata_go_exists
+      ignore_errors: true
+      changed_when: false
+    
     - name: Creating InconsolataGo font directory
+      when: inconsolata_go_exists is failed
       file:
         path: "{{ font_base_path }}/InconsolataGo"
         state: directory
+        mode: "0755"
+        owner: "{{ remote_regular_user }}"
     
-
     - name: Installing InconsolataGo Font
+      when: inconsolata_go_exists is failed
       ansible.builtin.get_url:
         url: "{{ item }}"
         dest: "{{ font_base_path }}/InconsolataGo"
@@ -72,4 +81,39 @@
         - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Bold/InconsolataGoNerdFont-Bold.ttf
         - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Bold/InconsolataGoNerdFontMono-Bold.ttf
         - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Bold/InconsolataGoNerdFontPropo-Bold.ttf
-      
+
+    - name: Check if CascadiaCode already exists
+      ansible.builtin.shell: "ls {{ font_base_path }}/CascadiaCode/CascadiaCode*"
+      register: cascadia_code_exists
+      ignore_errors: true
+      changed_when: false
+
+    - name: Get latest CascadiaCode Release URL
+      when: cascadia_code_exists is failed
+      shell: |
+        curl -s https://api.github.com/repos/Microsoft/cascadia-code/releases/latest | 
+        grep "browser_download_url" |
+        cut -d '"' -f 4 
+      register: cascadia_code_url
+
+    - debug:
+         msg: "{{ cascadia_code_url }}"
+
+    - name: Creating CascadiaCode font directory
+      when: cascadia_code_exists is failed
+      file:
+        path: "{{ font_base_path }}/CascadiaCode"
+        state: directory
+        mode: "0755"
+        owner: "{{ remote_regular_user }}"
+
+    - name: Installing CascadiaCode Font
+      when: cascadia_code_exists is failed
+      ansible.builtin.unarchive:
+        src: "{{ cascadia_code_url.stdout }}" 
+        dest: "{{ font_base_path }}/CascadiaCode"
+        remote_src: true
+        mode: "0755"
+        owner: "{{ remote_regular_user }}"
+        include: "ttf/Cascadia*.ttf"
+          
