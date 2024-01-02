@@ -12,7 +12,7 @@
     - name: Get Distribution
       shell: uname
       ignore_errors: yes
-      register: distro
+      register: uname 
 
     - name: Get my user
       ansible.builtin.set_fact:
@@ -50,10 +50,20 @@
           - plenv
         state: present
 
-    - name: Installing Inconsolata Font
-      ansibe.builtin.get_url:
-        url: {{ item }}
-        dest: "/usr/share/fonts/InconsolataGo"
+    - name: Font base install path
+      set_fact:
+          font_base_path: "{% if uname.stdout == 'Darwin' %}~/Library/Fonts{% else %}/usr/share/fonts{% endif %}" 
+     
+    - name: Creating InconsolataGo font directory
+      file:
+        path: "{{ font_base_path }}/InconsolataGo"
+        state: directory
+    
+
+    - name: Installing InconsolataGo Font
+      ansible.builtin.get_url:
+        url: "{{ item }}"
+        dest: "{{ font_base_path }}/InconsolataGo"
         mode: "0644"
       loop:
         - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Regular/InconsolataGoNerdFont-Regular.ttf
@@ -62,5 +72,4 @@
         - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Bold/InconsolataGoNerdFont-Bold.ttf
         - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Bold/InconsolataGoNerdFontMono-Bold.ttf
         - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/InconsolataGo/Bold/InconsolataGoNerdFontPropo-Bold.ttf
-      when: distro == "Linux"
       
