@@ -49,6 +49,7 @@
           - autoenv
           - pyenv
           - plenv
+          - docker
         state: present
 
     - name: Font base install path
