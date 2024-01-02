@@ -19,6 +19,14 @@
       ignore_errors: yes
       register: arch
 
+    - name: Check for WSL
+      shell: uname -r | grep WSL
+      ignore_errors: yes
+      register: is_wsl
+
+    - debug:
+         msg: "{{ is_wsl }}"
+
     - name: Get my user
       ansible.builtin.set_fact:
         remote_regular_user: "{{ ansible_env.SUDO_USER if ansible_env.SUDO_USER is defined else ansible_user_id }}"
@@ -55,6 +63,7 @@
           - pyenv
           - plenv
           - docker
+          - wget
         state: present
 
     - name: Font base install path
@@ -121,3 +130,13 @@
         owner: "{{ remote_regular_user }}"
         include: "ttf/Cascadia*.ttf"
           
+    - name: Check for VSCode
+      shell: which code
+      ignore_errors: yes
+      register: vscode_installed
+
+    - name: Installing VSCode
+      when: vscode_installed is failed and is_wsl is failed 
+      ansible.builtin.apt:
+        deb: "https://vscode.download.prss.microsoft.com/dbazure/download/stable/0ee08df0cf4527e40edc9aa28f4b5bd38bbff2b2/code_1.85.1-1702462158_amd64.deb"
+
