@@ -43,6 +43,7 @@
     - name: Install Brew Packages
       community.general.homebrew:
         name:
+          - ansible
           - exa
           - fzf
           - autoenv
