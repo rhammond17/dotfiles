@@ -96,9 +96,6 @@
         cut -d '"' -f 4 
       register: cascadia_code_url
 
-    - debug:
-         msg: "{{ cascadia_code_url }}"
-
     - name: Creating CascadiaCode font directory
       when: cascadia_code_exists is failed
       file:
