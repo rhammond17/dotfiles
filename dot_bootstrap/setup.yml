@@ -31,32 +31,16 @@
       ansible.builtin.set_fact:
         remote_regular_user: "{{ ansible_env.SUDO_USER if ansible_env.SUDO_USER is defined else ansible_user_id }}"
 
-    - name: Install packages
-      ansible.builtin.apt:
-        name:
-          - locales
-          - git
-          - vim
-          - zsh
-        state: present
-
-    - name: Change shell to zsh
-      ansible.builtin.user:
-        name: "{{ remote_regular_user }}"
-        shell: /usr/bin/zsh
-
-    - name: Generate Locales
-      ansible.builtin.shell:
-        cmd: locale-gen en_US.UTF-8
-
     - name: Update Homebrew
       community.general.homebrew:
         update_homebrew: true
 
-    - name: Install Brew Packages
+    - name: Install Homebrew Packages
       community.general.homebrew:
         name:
           - ansible
+          - git
+          - vim
           - exa
           - fzf
           - autoenv
