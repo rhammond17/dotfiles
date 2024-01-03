@@ -2,10 +2,16 @@
 
 ---
 
+- name: Set DEBIAN_FRONTEND to noninteractive
+  ansible.builtin.set_fact:
+    ansible_env:
+      DEBIAN_FRONTEND: noninteractive
+
 - name: Install apt packages
   ansible.builtin.apt:
     name:
       - locales
+      - tzdata
       - zsh
     state: present
 
@@ -17,6 +23,11 @@
 - name: Generate Locales
   ansible.builtin.shell:
     cmd: locale-gen en_US.UTF-8
+
+- name: Configure US/Pacific timezone
+  ansible.builtin.shell: |
+    ln -fs /usr/share/zoneinfo/US/Pacific /etc/localtime |
+    dpkg-reconfigure --frontend noninteractive tzdata
 
 - name: Check for VSCode
   ansible.builtin.shell: which code
