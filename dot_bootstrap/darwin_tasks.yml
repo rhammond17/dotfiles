@@ -1,0 +1,25 @@
+# darwin_tasks.yml
+
+---
+- name: Check for VSCode
+  shell: ls /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code
+  ignore_errors: yes
+  register: vscode_installed
+
+- name: Installing VSCode for OSX Intel
+  when: vscode_installed is failed and arch.stdout='x86_64'
+  ansible.builtin.unarchive:
+    src: "https://vscode.download.prss.microsoft.com/dbazure/download/stable/0ee08df0cf4527e40edc9aa28f4b5bd38bbff2b2/VSCode-darwin.zip" 
+    dest: "/Applications"
+    remote_src: true
+    mode: "0755"
+    owner: "{{ remote_regular_user }}"
+
+- name: Installing VSCode for OSX Apple Silicon
+  when: vscode_installed is failed and arch.stdout='arm64'
+  ansible.builtin.unarchive:
+    src: "https://vscode.download.prss.microsoft.com/dbazure/download/stable/0ee08df0cf4527e40edc9aa28f4b5bd38bbff2b2/VSCode-darwin-arm64.zip"
+    dest: "/Applications"
+    remote_src: true
+    mode: "0755"
+    owner: "{{ remote_regular_user }}"

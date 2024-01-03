@@ -130,13 +130,9 @@
         owner: "{{ remote_regular_user }}"
         include: "ttf/Cascadia*.ttf"
           
-    - name: Check for VSCode
-      shell: which code || ls /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code
-      ignore_errors: yes
-      register: vscode_installed
+    - include_tasks: linux_tasks.yml
+      when: uname.stdout == 'Linux'
 
-    - name: Installing VSCode for Linux
-      when: vscode_installed is failed and is_wsl is failed and uname.stdout=="Linux" 
-      ansible.builtin.apt:
-        deb: "https://vscode.download.prss.microsoft.com/dbazure/download/stable/0ee08df0cf4527e40edc9aa28f4b5bd38bbff2b2/code_1.85.1-1702462158_amd64.deb"
-
+    - include_tasks: darwin_tasks.yml
+      when: uname.stdout == 'Darwin'
+      
