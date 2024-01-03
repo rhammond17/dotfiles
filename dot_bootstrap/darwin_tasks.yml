@@ -2,7 +2,7 @@
 
 ---
 - name: Check for VSCode
-  shell: "ls /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+  ansible.builtin.shell: "ls /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
   ignore_errors: yes
   changed_when: false
   register: vscode_installed
@@ -26,7 +26,7 @@
     owner: "{{ remote_regular_user }}"
 
 - name: Check for Warp
-  shell: "ls /Applications/Warp.app"
+  ansible.builtin.shell: "ls /Applications/Warp.app"
   ignore_errors: yes
   changed_when: false
   register: warp_installed
@@ -37,3 +37,11 @@
     name:
       - warp
     state: present
+
+- name: Installing warp themes
+  when: warp_installed is failed
+  ansible.builtin.git:
+    repo: "https://github.com/warpdotdev/themes.git"
+    dest: "~/.warp"
+    single_branch: yes
+    version: main

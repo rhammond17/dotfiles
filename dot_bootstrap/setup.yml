@@ -10,17 +10,17 @@
 
   tasks:
     - name: Get Distribution
-      shell: uname
+      ansible.builtin.shell: uname
       ignore_errors: yes
       register: uname 
 
     - name: Get Architecture
-      shell: uname -m
+      ansible.builtin.shell: uname -m
       ignore_errors: yes
       register: arch
 
     - name: Check for WSL
-      shell: uname -r | grep WSL
+      ansible.builtin.shell: uname -r | grep WSLo
       ignore_errors: yes
       register: is_wsl
 
@@ -70,7 +70,7 @@
       set_fact:
           font_base_path: "{% if uname.stdout == 'Darwin' %}~/Library/Fonts{% else %}/usr/share/fonts{% endif %}" 
 
-    - name: Check if InconsolataGo already exists
+    - name: Check if InconsolataGo already installed
       ansible.builtin.shell: "ls {{ font_base_path }}/InconsolataGo/InconsolataGoNerdFont*"
       register: inconsolata_go_exists
       ignore_errors: true
@@ -106,7 +106,7 @@
 
     - name: Get latest CascadiaCode Release URL
       when: cascadia_code_exists is failed
-      shell: |
+      ansible.builtin.shell: |
         curl -s https://api.github.com/repos/Microsoft/cascadia-code/releases/latest | 
         grep "browser_download_url" |
         cut -d '"' -f 4 
@@ -135,4 +135,3 @@
 
     - include_tasks: darwin_tasks.yml
       when: uname.stdout == 'Darwin'
-      
