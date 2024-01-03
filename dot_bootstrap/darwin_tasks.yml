@@ -2,8 +2,9 @@
 
 ---
 - name: Check for VSCode
-  shell: ls /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code
+  shell: "ls /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
   ignore_errors: yes
+  changed_when: false
   register: vscode_installed
 
 - name: Installing VSCode for OSX Intel
@@ -23,3 +24,16 @@
     remote_src: true
     mode: "0755"
     owner: "{{ remote_regular_user }}"
+
+- name: Check for Warp
+  shell: "ls /Applications/Warp.app"
+  ignore_errors: yes
+  changed_when: false
+  register: warp_installed
+
+- name: Installing warp
+  when: warp_installed is failed
+  community.general.homebrew:
+    name:
+      - warp
+    state: present

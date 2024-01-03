@@ -3,6 +3,8 @@
 ---
 - name: Check for VSCode
   shell: which code
+  ignore_errors: yes
+  changed_when: false
   register: vscode_installed
 
 - name: Installing VSCode for Linux
