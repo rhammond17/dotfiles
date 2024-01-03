@@ -20,7 +20,7 @@
       register: arch
 
     - name: Check for WSL
-      ansible.builtin.shell: uname -r | grep WSLo
+      ansible.builtin.shell: uname -r | grep WSL
       ignore_errors: yes
       register: is_wsl
 
