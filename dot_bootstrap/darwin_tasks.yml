@@ -2,7 +2,7 @@
 
 ---
 - name: Check for VSCode
-  ansible.builtin.shell: "ls /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+  ansible.builtin.shell: "ls /Applications/Visual\\ Studio\\ Code.app/Contents/Resources/app/bin/code"
   ignore_errors: yes
   changed_when: false
   register: vscode_installed
