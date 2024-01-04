@@ -29,10 +29,12 @@
         remote_regular_user: "{{ ansible_env.SUDO_USER if ansible_env.SUDO_USER is defined else ansible_user_id }}"
 
     - name: Update Homebrew
+      become_user: "{{ remote_regular_user }}"
       community.general.homebrew:
         update_homebrew: true
 
     - name: Install Homebrew Packages
+      become_user: "{{ remote_regular_user }}"
       community.general.homebrew:
         name:
           - git
