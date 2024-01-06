@@ -104,6 +104,8 @@
 
     - name: Installing CascadiaCode Font
       when: cascadia_code_exists is failed
+      become: true
+      become_user: "{{ remote_regular_user }}"
       ansible.builtin.unarchive:
         src: "{{ cascadia_code_url.stdout }}" 
         dest: "{{ font_base_path }}/CascadiaCode"
