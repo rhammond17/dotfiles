@@ -1,0 +1,277 @@
+add_newline=false
+command_timeout = 1000
+
+format = """$directory$kubernetes$git_branch$git_status($all)$character"""
+
+[line_break]
+disabled=false
+
+[fill]
+disabled=true
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]
+success_symbol = "[->](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = " [✗](bold red)"
+
+# truncation length works backwards (i.e., cwd > parent > parent ...)
+[directory]
+truncation_length = 15
+truncation_symbol = "…/"
+truncate_to_repo = true
+style = 'bold purple'
+format = '[\[](bold green)[$path]($style)[\]](bold green)[$read_only]($read_only_style)'
+
+
+# Enabled =================================================
+[aws]
+format = ' \[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
+
+[c]
+format = ' \[[$symbol($version(-$name))]($style)\]'
+
+[cmake]
+format = ' \[[$symbol($version)]($style)\]'
+
+[cmd_duration]
+format = ' \[[⏱ $duration]($style)\]'
+
+[docker_context]
+format = ' \[[$symbol$context]($style)\]'
+
+[git_branch]
+style='green'
+format = ' \[[$symbol$branch]($style)\]'
+
+[git_status]
+disabled=true
+style='green'
+#format = '([\[$all_status$ahead_behind\]]($style))'
+format = '\[([$all_status$ahead_behind]($style))\]'
+conflicted = "⚔️ "
+ahead = "🏎️ 💨 ×${count} "
+behind = "🐢 ×${count} "
+diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count} "
+untracked = "🛤️  ×${count} "
+stashed = "📦 "
+modified = "📝 ×${count} "
+staged = "🗃️  ×${count} "
+renamed = "📛 ×${count} "
+deleted = "🗑️  ×${count} "
+
+[golang]
+format = ' \[[$symbol($version)]($style)\]'
+
+[helm]
+format = ' \[[$symbol($version)]($style)\]'
+
+[hg_branch]
+format = ' \[[$symbol$branch]($style)\]'
+
+[java]
+format = ' \[[$symbol($version)]($style)\]'
+
+[kubernetes]
+disabled=false
+#style = 'bold fg:#ff5400'
+style = 'bold fg:#ff8469'
+format = ' \[[$symbol$context( [\($namespace\)](cyan))]($style)\]'
+
+[lua]
+format = ' \[[$symbol($version)]($style)\]'
+
+[nodejs]
+format = ' \[[$symbol($version)]($style)\]'
+
+[memory_usage]
+format = ' \[$symbol[$ram( | $swap)]($style)\]'
+
+[os]
+format = ' \[[$symbol]($style)\]'
+
+[package]
+format = ' \[[$symbol$version]($style)\]'
+
+[perl]
+format = ' \[[$symbol($version)]($style)\]'
+
+[python]
+symbol = " "
+format = ' \[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+
+[rust]
+format = ' \[[$symbol($version)]($style)\]'
+
+[sudo]
+format = ' \[[as $symbol]($style)\]'
+
+[terraform]
+format = ' \[[$symbol$workspace]($style)\]'
+
+[time]
+format = ' \[[$time]($style)\]'
+
+[username]
+format = ' \[[$user]($style)\]'
+
+[vagrant]
+format = ' \[[$symbol($version)]($style)\]'
+
+
+
+# Disabled =================================================
+[bun]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[cobol]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[conda]
+disabled=true
+format = '\[[$symbol$environment]($style)\]'
+
+[crystal]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[daml]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[dart]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[deno]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[dotnet]
+disabled=true
+format = '\[[$symbol($version)(🎯 $tfm)]($style)\]'
+
+[elixir]
+disabled=true
+format = '\[[$symbol($version \(OTP $otp_version\))]($style)\]'
+
+[elm]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[erlang]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[fennel]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[fossil_branch]
+disabled=true
+format = '\[[$symbol$branch]($style)\]'
+
+[gcloud]
+disabled=true
+format = '\[[$symbol$account(@$domain)(\($region\))]($style)\]'
+
+[gradle]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[guix_shell]
+disabled=true
+format = '\[[$symbol]($style)\]'
+
+[haskell]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[haxe]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[julia]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[kotlin]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[meson]
+disabled=true
+format = '\[[$symbol$project]($style)\]'
+
+[nim]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[nix_shell]
+disabled=true
+format = '\[[$symbol$state( \($name\))]($style)\]'
+
+[ocaml]
+disabled=true
+format = '\[[$symbol($version)(\($switch_indicator$switch_name\))]($style)\]'
+
+[opa]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[openstack]
+disabled=true
+format = '\[[$symbol$cloud(\($project\))]($style)\]'
+
+[php]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[pijul_channel]
+disabled=true
+format = '\[[$symbol$channel]($style)\]'
+
+[pulumi]
+disabled=true
+format = '\[[$symbol$stack]($style)\]'
+
+[purescript]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[raku]
+disabled=true
+format = '\[[$symbol($version-$vm_version)]($style)\]'
+
+[red]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[ruby]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[scala]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[spack]
+disabled=true
+format = '\[[$symbol$environment]($style)\]'
+
+[swift]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[vlang]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[zig]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
+
+[solidity]
+disabled=true
+format = '\[[$symbol($version)]($style)\]'
